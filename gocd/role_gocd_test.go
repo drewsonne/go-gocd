@@ -6,14 +6,16 @@ import (
 	"github.com/stretchr/testify/assert"
 	"regexp"
 	"testing"
+	"net/http"
+	"io/ioutil"
 )
 
 func TestRole(t *testing.T) {
-	t.Run("GoCD", testRoleGoCD)
+	t.Run("Create/GoCD", testRoleCreateGoCD)
+	t.Run("List", testRoleList)
 }
 
-func testRoleGoCD(t *testing.T) {
-
+func testRoleCreateGoCD(t *testing.T) {
 	if runIntegrationTest(t) {
 
 		ctx := context.Background()
@@ -99,7 +101,49 @@ func testRoleGoCD(t *testing.T) {
 		assert.NoError(t, err)
 		assert.Empty(t, roleResponse)
 
-	} else {
-		skipIntegrationtest(t)
 	}
+}
+
+func testRoleList(t *testing.T) {
+	setup()
+	defer teardown()
+	mux.HandleFunc("/api/admin/security/roles", func(w http.ResponseWriter, r *http.Request) {
+		assert.Equal(t, r.Method, "GET", "Unexpected HTTP method")
+		assert.Equal(t, apiV1, r.Header.Get("Accept"))
+
+		j, _ := ioutil.ReadFile("test/resources/role.2.json")
+
+		fmt.Fprint(w, string(j))
+	})
+
+	r, _, err := client.Roles.List(context.Background())
+
+	assert.NoError(t, err)
+
+	assert.Equal(t, []*Role{
+		{
+			Name: "spacetiger",
+			Type: "gocd",
+			Attributes: &RoleAttributesGoCD{
+				Users: []string{"alice", "bob", "robin"},
+			},
+		},
+		{
+			Name: "blackbird",
+			Type: "plugin",
+			Attributes: &RoleAttributesGoCD{
+				AuthConfigID: String("ldap"),
+				Properties: []*RoleAttributeProperties{
+					{
+						Key:   "UserGroupMembershipAttribute",
+						Value: "memberOf",
+					},
+					{
+						Key:   "GroupIdentifiers",
+						Value: "ou=admins,ou=groups,ou=system,dc=example,dc=com",
+					},
+				},
+			},
+		},
+	}, r)
 }
