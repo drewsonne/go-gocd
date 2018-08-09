@@ -40,13 +40,19 @@ func testPipelineServiceUnPause(t *testing.T) {
 
 				pausePipeline, _, err := intClient.PipelineConfigs.Create(ctx, mockTestingGroup, &Pipeline{
 					Name: pipelineName,
+					Materials: []Material{{
+						Type: "git",
+					}},
+					Stages: buildMockPipelineStages(),
 				})
+				assert.NoError(t, err)
+				assert.Equal(t, nil, pausePipeline)
 
-				pp, _, err := intClient.Pipelines.Pause(ctx, pausePipeline.Name)
+				pp, _, err := intClient.Pipelines.Pause(ctx, pipelineName)
 				assert.NoError(t, err)
 				assert.True(t, pp)
 
-				deleteResponse, _, err := intClient.PipelineConfigs.Delete(ctx, pausePipeline.Name)
+				deleteResponse, _, err := intClient.PipelineConfigs.Delete(ctx, pipelineName)
 				assert.Equal(t, "", deleteResponse)
 			}
 		})
