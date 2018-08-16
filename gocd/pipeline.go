@@ -196,7 +196,6 @@ func (pgs *PipelinesService) pipelineAction(ctx context.Context, name string, ac
 		Path:       fmt.Sprintf("pipelines/%s/%s", name, action),
 		APIVersion: apiVersion,
 	}
-
 	choosePipelineConfirmHeader(request, apiVersion)
 
 	_, resp, err := pgs.client.postAction(ctx, request)
