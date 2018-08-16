@@ -96,9 +96,9 @@ func TestServerVersionRange_Contains(t *testing.T) {
 	}
 }
 
-func newServerVersionRangeFromString(min string, max string) *ServerVersionRange {
-	minStruct := &ServerVersion{Version: min}
-	maxStruct := &ServerVersion{Version: max}
+func newServerVersionRangeFromString(min ServerVersionString, max ServerVersionString) *ServerVersionRange {
+	minStruct := &ServerVersion{Version: string(min)}
+	maxStruct := &ServerVersion{Version: string(max)}
 
 	minStruct.parseVersion()
 	maxStruct.parseVersion()
