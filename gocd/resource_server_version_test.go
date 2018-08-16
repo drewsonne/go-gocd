@@ -122,7 +122,7 @@ func TestNewserverAPIVersionMapping(t *testing.T) {
 	mockVersion, err := version.NewVersion("1.0.0")
 	assert.NoError(t, err)
 	type args struct {
-		serverVersion string
+		serverVersion ServerVersionString
 		apiVersion    string
 	}
 	tests := []struct {

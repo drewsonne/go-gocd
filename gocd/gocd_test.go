@@ -103,9 +103,10 @@ func runOnlyForServerVersionRange(t *testing.T, min ServerVersionString, max Ser
 	}
 	if versionRange.Contains(version) {
 		return true
-	} else {
-		t.Skipf("could not run test as '%s' is not in the range '%s' ", version.String(), versionRange.String())
 	}
+	t.Skipf("could not run test as '%s' is not in the range '%s' ", version.String(), versionRange.String())
+
+	return false
 }
 
 func TestClient(t *testing.T) {

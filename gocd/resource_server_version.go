@@ -60,6 +60,11 @@ func (sv *ServerVersion) GetAPIVersion(endpoint string) (apiVersion string, err 
 	return "", fmt.Errorf("could not find API version tag for '%s'", endpoint)
 }
 
+func (sv *ServerVersion) String() string {
+	return sv.Version
+}
+
+
 func (sv *ServerVersion) parseVersion() (err error) {
 	sv.VersionParts, err = version.NewVersion(sv.Version)
 	return

@@ -1,6 +1,9 @@
 package gocd
 
-import "errors"
+import (
+	"errors"
+	"fmt"
+)
 
 var BadServerVersionRange = errors.New("minimum server version must not be larger than maximum server version")
 
@@ -24,5 +27,9 @@ func NewServerVersionRange(min *ServerVersion, max *ServerVersion) (*ServerVersi
 func (svr *ServerVersionRange) Contains(version *ServerVersion) bool {
 	lowerBound := svr.min.LessThan(version)
 	upperBound := version.LessThan(svr.max)
-	return lowerBound && upperBound
+	equality := version.Equal(svr.max)
+	return lowerBound && upperBound || equality
+}
+func (svr *ServerVersionRange) String() string {
+	return fmt.Sprintf("(%s, %s]", svr.min.String(), svr.max.String())
 }
