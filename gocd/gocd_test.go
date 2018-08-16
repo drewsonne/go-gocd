@@ -89,6 +89,12 @@ func skipIntegrationtest(t *testing.T) {
 	t.Skip("'GOCD_ACC=1' must be set to run integration tests")
 }
 
+
+
+func runOnlyForServerVersionRange(t, min testServerVersionString, max testServerVersionString) {
+
+}
+
 func TestClient(t *testing.T) {
 	setup()
 	defer teardown()
