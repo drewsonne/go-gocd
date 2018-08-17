@@ -47,20 +47,22 @@ func testUnmarshallMaterialAttributesP4(t *testing.T) {
 func testGenerateGenericP4Dependency(t *testing.T) {
 	for _, tt := range []struct {
 		name           string
-		dependency     *MaterialAttributesGit
+		dependency     *MaterialAttributesP4
 		dependencyWant map[string]interface{}
 	}{
 		{
 			name: "basic",
 			dependency: &MaterialAttributesP4{
-				Name:            "mock-name",
-				URL:             "mock-url",
-				Branch:          "mock-branch",
-				SubmoduleFolder: "mock-folder",
-				ShallowClone:    true,
-				Destination:     "mock-destination",
-				InvertFilter:    true,
-				AutoUpdate:      true,
+				Name:              "mock-name",
+				Port:              "mock-port",
+				UseTickets:        true,
+				View:              "mock-view",
+				Username:          "mock-username",
+				Password:          "mock-password",
+				EncryptedPassword: "mock-enc-password",
+				Destination:       "mock-destination",
+				InvertFilter:      true,
+				AutoUpdate:        true,
 				Filter: &MaterialFilter{
 					Ignore: []string{"one", "two"},
 				},
@@ -81,7 +83,7 @@ func testGenerateGenericP4Dependency(t *testing.T) {
 		},
 		{
 			name:           "null",
-			dependency:     &MaterialAttributesGit{},
+			dependency:     &MaterialAttributesP4{},
 			dependencyWant: map[string]interface{}{},
 		},
 	} {
