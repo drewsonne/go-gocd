@@ -1,5 +1,5 @@
 hash: 5466a335e10ab8259137b683cf79aefc921aaa45e45dba653036f22edd5a0aba
-updated: 2018-07-26T07:11:11.744908+01:00
+updated: 2018-08-16T08:53:51.822651+01:00
 imports:
 - name: github.com/hashicorp/go-version
   version: 270f2f71b1ee587f3b609f00f422b76a6b28f348
@@ -10,17 +10,17 @@ imports:
 - name: github.com/mgutz/ansi
   version: 9520e82c474b0a04dd04f8a40959027271bab992
 - name: github.com/sirupsen/logrus
-  version: c108f5553c369120b773da633aca62a8b42b1cf4
+  version: e4b0c6d7829bcf64435536c4a88f4088a3c76203
 - name: github.com/urakozz/go-json-schema-generator
   version: 645b0ded705ed7cec8c301e3bf11df8a4e544551
 - name: github.com/urfave/cli
   version: cfb38830724cc34fedffe9a2a29fb54fa9169cd1
 - name: golang.org/x/crypto
-  version: c126467f60eb25f8f27e5a981f32a87e3965053f
+  version: de0752318171da717af4ce24d0a2e8626afaeb11
   subpackages:
   - ssh/terminal
 - name: golang.org/x/sys
-  version: e072cadbbdc8dd3d3ffa82b8b4b9304c261d9311
+  version: 1c9583448a9c3aa0f9a6a5241bf73c0bd8aafded
   subpackages:
   - unix
   - windows
@@ -37,7 +37,7 @@ testImports:
   subpackages:
   - spew
 - name: github.com/goreleaser/goreleaser
-  version: 9154294c00a9e317198967c0c2f08cd9f04645c1
+  version: dba643c19f5261f8389f20e9291acaafacf45b9a
   subpackages:
   - assert
 - name: github.com/pmezard/go-difflib

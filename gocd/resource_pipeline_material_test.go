@@ -14,6 +14,7 @@ func testResourceMaterial(t *testing.T) {
 	t.Run("HasFilter", testMaterialAttributeFilterable)
 	t.Run("Unmarshall", testMaterialUnmarshall)
 	t.Run("UnmarshallAttributes", testMaterialUnmarshallAttributes)
+	t.Run("DecodeConfigStringList", testDecodeConfigStringList)
 }
 
 func testMaterialAttributeGeneric(t *testing.T) {
@@ -230,11 +231,48 @@ func testMaterialUnmarshall(t *testing.T) {
 
 func testMaterialUnmarshallAttributes(t *testing.T) {
 	t.Run("Dependency", testUnmarshallMaterialAttributesDependency)
+	t.Run("DependencyGeneric", testGenerateGenericMaterialDependency)
 	t.Run("Git", testUnmarshallMaterialAttributesGit)
+	t.Run("GitGeneric", testGenerateGenericGitDependency)
 	t.Run("Hg", testUnmarshallMaterialAttributesHg)
 	t.Run("P4", testUnmarshallMaterialAttributesP4)
+	t.Run("P4Generic", testGenerateGenericP4Dependency)
 	t.Run("Package", testUnmarshallMaterialAttributesPkg)
 	t.Run("Plugin", testUnmarshallMaterialAttributesPlugin)
 	t.Run("SVN", testUnmarshallMaterialAttributesSvn)
 	t.Run("TFS", testUnmarshallMaterialAttributesTfs)
+}
+
+func testDecodeConfigStringList(t *testing.T) {
+	type args struct {
+		lI []interface{}
+	}
+	for _, tt := range []struct {
+		name    string
+		args    args
+		wantRet []string
+	}{
+		{
+			name: "basic",
+			args: args{
+				lI: []interface{}{
+					"one",
+				},
+			},
+			wantRet: []string{"one"},
+		},
+		{
+			name: "multi",
+			args: args{
+				lI: []interface{}{
+					"one",
+					"two",
+				},
+			},
+			wantRet: []string{"one", "two"},
+		},
+	} {
+		got := decodeConfigStringList(tt.args.lI)
+		assert.Equal(t, tt.wantRet, got)
+	}
 }

@@ -40,3 +40,51 @@ func testUnmarshallMaterialAttributesGit(t *testing.T) {
 
 	assert.Equal(t, expected, m)
 }
+
+func testGenerateGenericGitDependency(t *testing.T) {
+	for _, tt := range []struct {
+		name           string
+		dependency     *MaterialAttributesGit
+		dependencyWant map[string]interface{}
+	}{
+		{
+			name: "basic",
+			dependency: &MaterialAttributesGit{
+				Name:            "mock-name",
+				URL:             "mock-url",
+				Branch:          "mock-branch",
+				SubmoduleFolder: "mock-folder",
+				ShallowClone:    true,
+				Destination:     "mock-destination",
+				InvertFilter:    true,
+				AutoUpdate:      true,
+				Filter: &MaterialFilter{
+					Ignore: []string{"one", "two"},
+				},
+			},
+			dependencyWant: map[string]interface{}{
+				"name":             "mock-name",
+				"url":              "mock-url",
+				"branch":           "mock-branch",
+				"submodule_folder": "mock-folder",
+				"shallow_clone":    true,
+				"destination":      "mock-destination",
+				"invert_filter":    true,
+				"auto_update":      true,
+				"filter": map[string]interface{}{
+					"ignore": []interface{}{"one", "two"},
+				},
+			},
+		},
+		{
+			name:           "null",
+			dependency:     &MaterialAttributesGit{},
+			dependencyWant: map[string]interface{}{},
+		},
+	} {
+		t.Run(tt.name, func(t *testing.T) {
+			got := tt.dependency.GenerateGeneric()
+			assert.Equal(t, tt.dependencyWant, got)
+		})
+	}
+}

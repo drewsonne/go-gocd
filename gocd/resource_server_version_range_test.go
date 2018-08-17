@@ -89,7 +89,7 @@ func TestServerVersionRange_Contains(t *testing.T) {
 			want: false,
 		},
 		{
-			name:"lower-bound",
+			name:         "lower-bound",
 			versionRange: newServerVersionRangeFromString("1.0.0", "3.0.0"),
 			args: args{
 				version: newServerVersion("1.0.0"),
@@ -97,12 +97,12 @@ func TestServerVersionRange_Contains(t *testing.T) {
 			want: false,
 		},
 		{
-			name: "upper-bound",
-			versionRange: newServerVersionRangeFromString("1.0.0","2.0.0"),
+			name:         "upper-bound",
+			versionRange: newServerVersionRangeFromString("1.0.0", "2.0.0"),
 			args: args{
 				version: newServerVersion("2.0.0"),
 			},
-			want:true,
+			want: true,
 		},
 	} {
 		t.Run(tt.name, func(t *testing.T) {
